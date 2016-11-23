@@ -1,13 +1,14 @@
 group 'org.vs.prototype'
 version '1.0-SNAPSHOT'
 
-//ext {
-//    springBootVersion = "1.4.2.RELEASE"
-//}
+ext {
+    springBootVersion = '1.4.2.RELEASE'
+}
 
 apply plugin: 'java'
 //apply plugin: 'application'
 apply plugin: 'idea'
+apply plugin: 'spring-boot'
 apply plugin: "io.spring.dependency-management"
 
 idea{
@@ -21,14 +22,18 @@ sourceCompatibility = 1.8
 
 
 buildscript {
+    ext {
+        springBootVersion = '1.4.2.RELEASE'
+    }
     repositories {
         jcenter()
         maven { url "http://repo.spring.io/snapshot" }
         maven { url "http://repo.spring.io/milestone" }
     }
     dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
 
@@ -37,8 +42,12 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter:1.4.2.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile 'org.springframework.cloud:spring-cloud-zookeeper-discovery:+'
+    compile 'org.springframework.cloud:spring-cloud-commons:+'
+    compile 'org.apache.curator:curator-client:2.+'
+    compile 'org.apache.curator:curator-x-discovery:2.+'
+    compile 'org.apache.zookeeper:zookeeper:3.4.+'
     compile "ch.qos.logback:logback-classic:1.1.7"
     compile "org.slf4j:slf4j-api:1.7.21"
 
